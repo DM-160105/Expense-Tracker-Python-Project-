@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+	<h1 class="mb-3">Summary</h1>
+	<div class="row g-3 mb-3">
+		<div class="col-sm-4">
+			<div class="card text-bg-light"><div class="card-body"><div class="fw-bold">Total</div><div class="display-6">{{ '%.2f'|format(summary.total) }}</div></div></div>
+		</div>
+		<div class="col-sm-4">
+			<div class="card text-bg-light"><div class="card-body"><div class="fw-bold">Average Daily</div><div class="display-6">{{ '%.2f'|format(summary.average_daily) }}</div></div></div>
+		</div>
+		<div class="col-sm-4">
+			<div class="card text-bg-light"><div class="card-body"><div class="fw-bold">Highest Category</div><div class="display-6">{{ summary.highest_category or '-' }}</div></div></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-6 mb-3 text-center"><img class="img-fluid" src="{{ category_chart }}" alt="Category Chart" /></div>
+		<div class="col-lg-6 mb-3 text-center"><img class="img-fluid" src="{{ monthly_chart }}" alt="Monthly Chart" /></div>
+	</div>
+	<h3>By Category</h3>
+	<table class="table table-striped">
+		<thead><tr><th>Category</th><th class="text-end">Amount</th></tr></thead>
+		<tbody>
+			{% for k, v in summary.by_category.items() %}
+				<tr><td>{{ k }}</td><td class="text-end">{{ '%.2f'|format(v) }}</td></tr>
+			{% else %}
+				<tr><td colspan="2" class="text-center">No data</td></tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
